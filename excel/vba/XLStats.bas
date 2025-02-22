@@ -1,4 +1,4 @@
-Attribute VB_Name = "Moments"
+Attribute VB_Name = "XLStats"
 Option Explicit
 
 Private Function ToArray__Range(r As Range) As Double()
