@@ -1,5 +1,6 @@
 Attribute VB_Name = "Utilities"
 Option Explicit
+Option Private Module
 
 Public Const two32 As LongLong = 2 ^ 32
 Public Const two31 As LongLong = 2 ^ 31
@@ -9,6 +10,9 @@ Public Const two31 As LongLong = 2 ^ 31
 Function CInt32__Scalar(x As LongLong) As Long
   ' Mimics C's two's complement overflow of signed Int32
   x = x Mod two32
+  If Sgn(x) = -1 Then
+    x = x + two32
+  End If
   If x >= two31 Then
     x = x - two32
   End If
@@ -50,5 +54,30 @@ Sub CHECK__CInt32()
 
 End Sub
 
+
+
+Function CDblArray__Range(r As Range) As Double()
+
+  Dim M As Integer
+  Dim N As Integer
+  Dim i As Integer
+  Dim j As Integer
+  
+  N = r.Rows.Count
+  M = r.Columns.Count
+  
+  Dim x() As Double
+  
+  ReDim x(1 To N * M) As Double
+  
+  For i = 1 To N
+    For j = 1 To M
+      x((j - 1) * N + i) = CDbl(r.Cells(i, j).Value)
+    Next
+  Next
+  
+  CDblArray__Range = x
+  
+End Function
 
 
