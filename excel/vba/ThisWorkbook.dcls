@@ -1,0 +1,60 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+END
+Attribute VB_Name = "ThisWorkbook"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = True
+
+Option Explicit
+' Private X As New cApplication
+
+
+Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
+  ExportMe
+End Sub
+
+
+Private Sub ExportMe()
+  Dim mDir As String
+  mDir = ThisWorkbook.Path & "\vba"
+  ExportVBAProject ThisWorkbook, mDir
+End Sub
+
+
+Sub Workbook_Open()
+  ' Set X.App = Application
+End Sub
+
+
+
+Public Sub ExportVBAProject(pBook As Workbook, pDir As String)
+
+  Dim mProj As Object
+  Dim mComponent As Object
+  Dim mExtension As String
+  
+  Set mProj = pBook.VBProject
+  
+  For Each mComponent In mProj.VBComponents
+    Select Case mComponent.Type
+      Case 1
+        mExtension = ".bas"
+      Case 2
+        mExtension = ".cls"
+      Case 3
+        mExtension = ".frm"
+      Case 100
+        mExtension = ".dcls"
+      Case Else
+        mExtension = ".unknown"
+    End Select
+  
+    mComponent.Export pDir & "\" & mComponent.Name & mExtension
+  Next
+
+End Sub
+
+
