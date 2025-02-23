@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 
 Option Explicit
 ' Private X As New cApplication
-Private mRNG As New XLStatsRNG
+Private mRng As New XLStatsRNG
 
 
 Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)

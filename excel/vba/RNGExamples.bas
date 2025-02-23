@@ -1,24 +1,28 @@
 Attribute VB_Name = "RNGExamples"
 Option Explicit
 
-Public Function CHECK__CursorProperty()
+Public Function XLStats_runif(N As Integer, pMin As Double, pMax As Double) As Double()
 
-  Dim mRNG As New XLStatsRNG
-  Dim y() As Long
-  Dim z(1 To 624, 1 To 1) As Long
+  Dim mRng As New XLStatsRNG
+  Dim y() As Double
+  Dim z() As Double
   Dim i As Integer
   
+  ReDim z(1 To N, 1 To 1) As Double
+  XLStats_runif = z
+  
   ' Debug.Print mRNG.RandomSeed
-  mRNG.Seed = 123
-  mRNG.mt_twist
-  y = mRNG.get_randomseeds
+  mRng.seed = 123
+  y = mRng.runif(N, pMin, pMax)
   
-  For i = 1 To 624
-    z(i, 1) = y(i)
-  Next
-  
-  CHECK__CursorProperty = z
+  ' For i = 1 To N
+  '   z(i, 1) = y(i)
+  ' Next
   
 End Function
 
 
+Public Function XLStatsRNG_runif_internal(seed As Long) As Double
+  Dim mRng As New XLStatsRNG
+  XLStatsRNG_runif_internal = mRng.runif_internal(seed)
+End Function

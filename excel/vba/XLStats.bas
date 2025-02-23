@@ -74,7 +74,7 @@ End Function
 
 Private Function FitDistMME__Array(x() As Double, pDistr As String, pVerbose As Boolean) As Variant()
   
-  Dim m As Double 'Mean
+  Dim M As Double 'Mean
   Dim v As Double 'Population variance
   
   Dim p1 As Double 'Parameter 1
@@ -97,15 +97,15 @@ Private Function FitDistMME__Array(x() As Double, pDistr As String, pVerbose As 
     Err.Raise 1022, "FitDistMME__Array", "Unexpected argument value: pDistr = '" & pDistr & "'"
   End If
   
-  m = Mean__Array(x)
+  M = Mean__Array(x)
   v = Variance__Array(x, "Population")
   
   
   If pDistr = "unif" Then
     Dim r As Double
     r = Sqr(3 * v) ' half-width of interval, with mean as center
-    p1 = m - r
-    p2 = m + r
+    p1 = M - r
+    p2 = M + r
     p1_name = "a: minimum"
     p2_name = "b: maximum"
     m_form = "1/2*(a+b)"
@@ -114,7 +114,7 @@ Private Function FitDistMME__Array(x() As Double, pDistr As String, pVerbose As 
   
   
   If pDistr = "norm" Then
-    p1 = m
+    p1 = M
     p2 = Sqr(v)
     p1_name = "m: mean"
     p2_name = "s: sd"
@@ -125,8 +125,8 @@ Private Function FitDistMME__Array(x() As Double, pDistr As String, pVerbose As 
   
   If pDistr = "lnorm" Then
     ' https://en.wikipedia.org/wiki/Log-normal_distribution#Method_of_moments
-    p1 = Log(m / Sqr(1 + v / m ^ 2))
-    p2 = Sqr(Log(1 + v / m ^ 2))
+    p1 = Log(M / Sqr(1 + v / M ^ 2))
+    p2 = Sqr(Log(1 + v / M ^ 2))
     p1_name = "m: mu"
     p2_name = "s: sigma"
     m_form = "exp(m + s^2/2)"
