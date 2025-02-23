@@ -10,6 +10,7 @@ Public Function CHECK__CursorProperty()
   
   ' Debug.Print mRNG.RandomSeed
   mRNG.Seed = 123
+  mRNG.mt_twist
   y = mRNG.get_randomseeds
   
   For i = 1 To 624
@@ -19,3 +20,5 @@ Public Function CHECK__CursorProperty()
   CHECK__CursorProperty = z
   
 End Function
+
+

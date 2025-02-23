@@ -58,20 +58,20 @@ End Sub
 
 Function CDblArray__Range(r As Range) As Double()
 
-  Dim M As Integer
+  Dim m As Integer
   Dim N As Integer
   Dim i As Integer
   Dim j As Integer
   
   N = r.Rows.Count
-  M = r.Columns.Count
+  m = r.Columns.Count
   
   Dim x() As Double
   
-  ReDim x(1 To N * M) As Double
+  ReDim x(1 To N * m) As Double
   
   For i = 1 To N
-    For j = 1 To M
+    For j = 1 To m
       x((j - 1) * N + i) = CDbl(r.Cells(i, j).Value)
     Next
   Next
@@ -79,5 +79,70 @@ Function CDblArray__Range(r As Range) As Double()
   CDblArray__Range = x
   
 End Function
+
+
+
+Public Function ShiftRight32(x As Long, s As Byte) As Long
+  Dim result As Long
+  
+  ' s is a Byte and cannot be negative
+  If s = 0 Then
+    ShiftRight32 = x
+    Exit Function
+  End If
+  
+  If s >= 32 Then
+    ShiftRight32 = 0
+    Exit Function
+  End If
+  
+  ' s is between 1 and 31
+  ' First deal with MSB
+  If Sgn(x) = -1 Then
+    result = (x And &H7FFFFFFF) \ 2 Or &H40000000
+    s = s - 1
+  End If
+  
+  result = x
+  Do While s > 0
+    result = result \ 2
+    s = s - 1
+  Loop
+  
+  ShiftRight32 = result
+  
+End Function
+
+
+Public Function ShiftLeft32(x As Long, s As Byte) As Long
+  ' https://www.excely.com/excel-vba/bit-shifting-function.shtml
+  Dim result As Long
+  Dim m As Long ' placeholder for bit in 31st position
+  
+  If s = 0 Then
+    ShiftLeft32 = x
+    Exit Function
+  End If
+  
+  If s >= 32 Then
+    ShiftLeft32 = 0
+    Exit Function
+  End If
+  
+  result = x
+  Do While s > 0
+    m = result And &H40000000
+    result = (result And &H3FFFFFFF) * 2
+    If m <> 0 Then
+      result = result Or &H80000000
+    End If
+    s = s - 1
+  Loop
+  
+  ShiftLeft32 = result
+  
+End Function
+
+
 
 
