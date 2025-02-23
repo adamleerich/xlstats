@@ -106,16 +106,14 @@ Public Function mt_twist()
   Dim N As Integer
   Dim m As Integer
     
-  Dim MATRIX_A As LongLong
-  Dim LOWER_MASK As LongLong
-  Dim UPPER_MASK As LongLong
-  ' Dim mag01(1 To 2) As LongLong
-  Dim mag01 As LongLong
+  Dim MATRIX_A As Long
+  Dim LOWER_MASK As Long
+  Dim UPPER_MASK As Long
+  Dim mag01(1 To 2) As Long
   Dim k As Integer
-  Dim y As LongLong
-  Dim y12 As Integer
+  Dim y As Long
   
-  Dim seeds(1 To 624) As LongLong
+  Dim seeds(1 To 624) As Long
   For k = 1 To 624
     seeds(k) = mt_seeds(k)
   Next
@@ -125,53 +123,33 @@ Public Function mt_twist()
   MATRIX_A = &H9908B0DF      '10011001000010001011000011011111
   LOWER_MASK = &H7FFFFFFF    '01111111111111111111111111111111
   UPPER_MASK = &H80000000    '10000000000000000000000000000000
-  ' mag01(1) = 0
-  ' mag01(2) = MATRIX_A
+  mag01(1) = 0
+  mag01(2) = MATRIX_A
     
   ' 1:227 references 1:228,398:624
   For k = 1 To (N - m)
     y = (seeds(k) And UPPER_MASK) Or (seeds(k + 1) And LOWER_MASK)
-    If Abs(y) Mod 2 = 0 Then
-      mag01 = 0
-    Else
-      mag01 = MATRIX_A
-    End If
-    seeds(k) = seeds(k + m) Xor (y \ 2) Xor mag01
+    seeds(k) = seeds(k + m) Xor ShiftRight32(y, 1) Xor mag01((y And &H1) + 1)
   Next k
     
   ' 228:454 references 228:455,1:227
   For k = (N - m + 1) To (2 * (N - m))
     y = (seeds(k) And UPPER_MASK) Or (seeds(k + 1) And LOWER_MASK)
-    If Abs(y) Mod 2 = 0 Then
-      mag01 = 0
-    Else
-      mag01 = MATRIX_A
-    End If
-    seeds(k) = seeds(k + (m - N)) Xor (y \ 2) Xor mag01
+    seeds(k) = seeds(k + (m - N)) Xor ShiftRight32(y, 1) Xor mag01((y And &H1) + 1)
   Next k
     
   ' 455:623 references 455:624,228:396
   For k = (2 * (N - m) + 1) To (N - 1)
     y = (seeds(k) And UPPER_MASK) Or (seeds(k + 1) And LOWER_MASK)
-    If Abs(y) Mod 2 = 0 Then
-      mag01 = 0
-    Else
-      mag01 = MATRIX_A
-    End If
-    seeds(k) = seeds(k + (m - N)) Xor (y \ 2) Xor mag01
+    seeds(k) = seeds(k + (m - N)) Xor ShiftRight32(y, 1) Xor mag01((y And &H1) + 1)
   Next k
     
   ' k = 624 references 1,624,397
   y = (seeds(N) And UPPER_MASK) Or (seeds(1) And LOWER_MASK)
-  If Abs(y) Mod 2 = 0 Then
-    mag01 = 0
-  Else
-    mag01 = MATRIX_A
-  End If
-  seeds(N) = seeds(m) Xor (y \ 2) Xor mag01
+  seeds(N) = seeds(m) Xor ShiftRight32(y, 1) Xor mag01((y And &H1) + 1)
   
   For k = 1 To 624
-    mt_seeds(k) = CInt32__Scalar(seeds(k))
+    mt_seeds(k) = seeds(k)
   Next
   
   counter_twists = counter_twists + 1

@@ -98,12 +98,12 @@ Public Function ShiftRight32(x As Long, s As Byte) As Long
   
   ' s is between 1 and 31
   ' First deal with MSB
+  result = x
   If Sgn(x) = -1 Then
     result = (x And &H7FFFFFFF) \ 2 Or &H40000000
     s = s - 1
   End If
   
-  result = x
   Do While s > 0
     result = result \ 2
     s = s - 1
