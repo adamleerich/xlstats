@@ -30,3 +30,24 @@ Sub Test_ShiftLeft32()
 End Sub
 
 
+Sub CHECK__CInt32()
+  
+  Dim x(10 To 15) As LongLong
+  Dim y() As Long
+  Dim i As Long
+  
+  x(10) = 129347812983#
+  x(11) = -987917263
+  x(12) = 19273981729381#
+  x(13) = -9879879878768#
+  x(14) = 1287
+  x(15) = -98798576
+  
+  y = CInt32__Array(x)
+  
+  For i = LBound(y) To UBound(y)
+    Debug.Print y(i)
+  Next
+
+End Sub
+

@@ -20,7 +20,7 @@ End Function
 Private Function Mean__Array(x() As Double) As Double
 
   Dim mSum As Double
-  Dim i As Integer
+  Dim i As Long
   
   For i = LBound(x) To UBound(x)
     mSum = mSum + x(i)
@@ -36,8 +36,8 @@ Private Function Variance__Array(x() As Double, pMethod) As Double
 
   Dim mSum As Double
   Dim mMean As Double
-  Dim i As Integer
-  Dim N As Integer
+  Dim i As Long
+  Dim N As Long
   
   pMethod = LCase(pMethod)
   

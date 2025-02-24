@@ -10,7 +10,7 @@ Attribute VB_Exposed = True
 
 Option Explicit
 ' Private X As New cApplication
-Private mRng As New XLStatsRNG
+' Private mRng As New XLStatsRNG
 
 
 Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
@@ -27,10 +27,7 @@ End Sub
 
 Sub Workbook_Open()
   ' Set X.App = Application
-  ' mRNG.IncrementCursor
 End Sub
-
-
 
 
 Public Sub ExportVBAProject(pBook As Workbook, pDir As String)

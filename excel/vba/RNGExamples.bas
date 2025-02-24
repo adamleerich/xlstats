@@ -1,12 +1,12 @@
 Attribute VB_Name = "RNGExamples"
 Option Explicit
 
-Public Function XLStats_runif(N As Integer, pMin As Double, pMax As Double) As Double()
+Public Function XLStats_runif(N As Long, pMin As Double, pMax As Double) As Double()
 
   Dim mRng As New XLStatsRNG
   Dim y() As Double
   Dim z() As Double
-  Dim i As Integer
+  Dim i As Long
   
   ReDim z(1 To N, 1 To 1) As Double
   XLStats_runif = z

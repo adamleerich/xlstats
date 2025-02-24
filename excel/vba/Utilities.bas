@@ -22,7 +22,7 @@ End Function
 
 
 Function CInt32__Array(x() As LongLong) As Long()
-  Dim i As Integer
+  Dim i As Long
   Dim result() As Long
   ReDim result(LBound(x) To UBound(x)) As Long
   For i = LBound(x) To UBound(x)
@@ -32,35 +32,11 @@ Function CInt32__Array(x() As LongLong) As Long()
 End Function
 
 
-
-Sub CHECK__CInt32()
-  
-  Dim x(10 To 15) As LongLong
-  Dim y() As Long
-  Dim i As Integer
-  
-  x(10) = 129347812983#
-  x(11) = -987917263
-  x(12) = 19273981729381#
-  x(13) = -9879879878768#
-  x(14) = 1287
-  x(15) = -98798576
-  
-  y = CInt32__Array(x)
-  
-  For i = LBound(y) To UBound(y)
-    Debug.Print y(i)
-  Next
-
-End Sub
-
-
-
 Function CDblArray__Range(r As Range) As Double()
 
-  Dim M As Integer
+  Dim M As Long
   Dim N As Integer
-  Dim i As Integer
+  Dim i As Long
   Dim j As Integer
   
   N = r.Rows.Count
